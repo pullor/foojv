@@ -20,6 +20,8 @@ import Tools from '../Tools/Tools'
 import Watch from '../Watch/Watch'
 // mine 界面
 import Mine from '../Mine/Mine'
+import Search from '../Home/search.vue'
+import Location from '../Home/location.vue'
 
 Vue.use(Router)
 
@@ -113,6 +115,16 @@ export default new Router({
       path: '/Mine',
       name: 'Mine',
       component: Mine
+    },
+    {
+      path: '/search',
+      name: 'seatch',
+      component: Search
+    },
+    {
+      path: '/location',
+      name: 'location',
+      component: Location
     }
   ]
 })
