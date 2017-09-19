@@ -2,7 +2,6 @@
  * Created by myimac on 17/9/6.
  */
 
-
 let serverUrl = 'http://114.215.83.139/fjw/api.php?'
 
 export default {
