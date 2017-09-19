@@ -36,7 +36,7 @@
     display: flex;
     width: 100%;
     text-align: center;
-    /*background-color: #ddd;*/
+    background-color: white;
     border-top: 1px solid #ccc;
     padding-top: 0.2rem;
   }

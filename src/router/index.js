@@ -27,11 +27,12 @@ export default new Router({
   routes: [
     {
       path: '/',
+      name: 'Home',
       component: Home
     },
     // home 界面
     {
-      path: '/Home',
+      path: '/home',
       name: 'Home',
       component: Home
     },
