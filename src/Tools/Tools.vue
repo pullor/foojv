@@ -10,16 +10,16 @@
     </div>
     <div class="selection">
       <ul>
-        <li><router-link to="/usedhouse"><img src="../assets/agent.png" alt=""><br><span>经纪人</span></router-link></li>
-        <li><router-link to="/usedhouse"><img src="../assets/calculate.png" alt=""><br><span>房贷计算器</span></router-link></li>
-        <li><router-link to="/usedhouse"><img src="../assets/taxCalculate.png" alt=""><br><span>税费计算</span></router-link></li>
+        <li><router-link to="/agency"><img src="../assets/agent.png" alt=""><br><span>经纪人</span></router-link></li>
+        <li><router-link to="/calculatorhouse"><img src="../assets/calculate.png" alt=""><br><span>房贷计算器</span></router-link></li>
+        <li><router-link to="/taxcalculator"><img src="../assets/taxCalculate.png" alt=""><br><span>税费计算</span></router-link></li>
       </ul>
     </div>
     <div class="selection">
       <ul>
-        <li><router-link to=""><img src="../assets/findmarket.png" alt=""> <br><span>查门店</span></a></router-link></li>
-        <li><router-link to=""><img src="../assets/valuation.png" alt=""><br><span>房屋估价</span></a></router-link></li>
-        <li><router-link to=""><img src="../assets/helpForHouse.png" alt=""><br><span>帮我找房</span></a></router-link></li>
+        <li><router-link to="/findmarket"><img src="../assets/findmarket.png" alt=""> <br><span>查门店</span></router-link></li>
+        <li><router-link to="/valuation"><img src="../assets/valuation.png" alt=""><br><span>房屋估价</span></router-link></li>
+        <li><router-link to="/helphouse"><img src="../assets/helpForHouse.png" alt=""><br><span>帮我找房</span></router-link></li>
       </ul>
     </div>
     <footerbar></footerbar>
@@ -60,5 +60,8 @@
   .selection ul img{
     width: 2rem;
     height: 2rem;
+  }
+  .mint-header-title{
+    margin-left: 13rem;
   }
 </style>
