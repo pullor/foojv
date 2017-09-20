@@ -30,7 +30,7 @@
     <div class="toutiao">
       <ul>
         <li class="image"></li>
-        <li></li>
+        <li class="toutiaocontent"></li>
       </ul>
     </div>
     <mt-header title="活动专题">
@@ -68,11 +68,43 @@
       </router-link>
       <mt-button icon="more" slot="right"></mt-button>
     </mt-header>
+
     <mt-navbar v-model="selected">
       <mt-tab-item id="1">二手房</mt-tab-item>
       <mt-tab-item id="2">新房</mt-tab-item>
       <mt-tab-item id="3">租房</mt-tab-item>
     </mt-navbar>
+    <mt-tab-container v-model="selected">
+      <mt-tab-container-item id="1">
+        <mt-cell v-for="item in usedlist" key="1">
+          <img src="../assets/usedhouse1.png" alt="" >
+          <p>{{item.address}} {{item.decoration}}</p>
+          <p>{{item.livingroom}}室{{item.wc}}卫/{{item.direction}}</p>
+          <p class="total">{{item.total_price}}万</p>
+          <p>{{item.unit_price}}/m²</p>
+        </mt-cell>
+      </mt-tab-container-item>
+      <mt-tab-container-item id="2">
+        <mt-cell v-for="item in usedlist"  key="2">
+          <img src="../assets/usedhouse1.png" alt="" >
+          <p>{{item.address}} {{item.decoration}}</p>
+          <p>{{item.livingroom}}室{{item.wc}}卫/{{item.direction}}</p>
+          <p class="total">{{item.total_price}}万</p>
+          <p>{{item.unit_price}}/m²</p>
+          </mt-cell>
+      </mt-tab-container-item>
+      <mt-tab-container-item id="3">
+        <mt-cell v-for="item in usedlist" key="3">
+          <img src="../assets/usedhouse1.png" alt="" >
+          <p>{{item.address}} {{item.decoration}}</p>
+          <p>{{item.livingroom}}室{{item.wc}}卫/{{item.direction}}</p>
+          <p class="total">{{item.total_price}}万</p>
+          <p>{{item.unit_price}}/m²</p>
+          </mt-cell>
+      </mt-tab-container-item>
+    </mt-tab-container>
+
+
     <div class="toutiao">
       <ul>
         <li></li>
@@ -98,9 +130,30 @@
 
 <script>
   import footerbar from '../components/Footbar.vue'
+  import {usedList} from '../api/api'
   export default {
     components: {
       footerbar: footerbar
+    },
+    data () {
+      return {
+        selected: '',
+        usedlist: []
+      }
+    },
+    mounted () {
+      this.getusedlist()
+    },
+    methods: {
+      getusedlist () {
+        var self = this
+        usedList().then(function (res) {
+          if (res.data.code === 200) {
+            self.usedlist = res.data.data
+            console.log(res.data.data)
+          }
+        }).catch(function () {})
+      }
     }
   }
 </script>
@@ -161,14 +214,22 @@ section{
 .toutiao{
   width: 100%;
   height: 5rem;
-  background-color: lightblue;
 }
 .toutiao .image{
+  display: inline-block;
   background: url("../assets/fujutoutiao.png");
   background-size: cover;
   height: 3rem;
   width: 3rem;
-  padding: 0.5rem;
+  margin: 1rem;
+}
+.toutiao .toutiaocontent{
+  display: inline-block;
+  height: 3rem;
+  width: 17rem;
+  background-color: white;
+  border-left:0.05rem solid #ccc;
+  margin-bottom: 1rem;
 }
 .mint-header{
   font-size: 0.9rem;
@@ -257,5 +318,24 @@ section{
 .baike5{
   background: url("http://www.fooju.cn/fjw/uploads/encyType/20170829/59a4cd7b9d5ee.png") center center no-repeat;
 }
-
+.mint-cell-text{
+  font-size: 1rem;
+}
+.mint-cell-wrapper{
+  margin-bottom: 0.1rem;
+}
+  .mint-cell-value{
+    height: 6rem;
+    width: 100%;
+    font-size: 0.8rem;
+  }
+.mint-cell-value img{
+  display: inline-block;
+  height: 6rem ;
+  width: 8rem;
+}
+.mint-cell-value .total{
+  font-size: 1rem;
+  color:red;
+}
 </style>

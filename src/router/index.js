@@ -22,6 +22,12 @@ import Watch from '../Watch/Watch'
 import Mine from '../Mine/Mine'
 import Search from '../Home/search.vue'
 import Location from '../Home/location.vue'
+import Agency from '../Tools/agency.vue'
+import CalculatorHouse from '../Tools/calculatorhouse.vue'
+import FindMarket from '../Tools/findmarket.vue'
+import HelpHouse from '../Tools/helphouse.vue'
+import TaxCalculator from '../Tools/taxcalculator.vue'
+import Valuation from '../Tools/valuation.vue'
 
 Vue.use(Router)
 
@@ -29,7 +35,6 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Home',
       component: Home
     },
     // home 界面
@@ -126,6 +131,36 @@ export default new Router({
       path: '/location',
       name: 'location',
       component: Location
+    },
+    {
+      path: '/agency',
+      name: 'agency',
+      component: Agency
+    },
+    {
+      path: '/calculatorhouse',
+      name: 'calculatorhouse',
+      component: CalculatorHouse
+    },
+    {
+      path: '/findmarket',
+      name: 'findmarket',
+      component: FindMarket
+    },
+    {
+      path: '/helphouse',
+      name: 'helphouse',
+      component: HelpHouse
+    },
+    {
+      path: '/taxcalculator',
+      name: 'talcalculator',
+      component: TaxCalculator
+    },
+    {
+      path: '/valuation',
+      name: 'valuation',
+      component: Valuation
     }
   ]
 })

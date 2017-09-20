@@ -7,7 +7,7 @@ let serverUrl = 'http://114.215.83.139/fjw/api.php?'
 export default {
   serverUrl: 'http://www.fooju.cn/',
 
-  login: serverUrl + 's=Login/login',
+  RecordListslogin: serverUrl + 's=Login/login',
   /* 登录 */
 
   register: serverUrl + 's=Login/register',
