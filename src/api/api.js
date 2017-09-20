@@ -7,7 +7,7 @@ import axios from 'axios'
 export const userList = () => {
   return axios.post(config.used_lists)
 }
-
+``
 export const usedHouse = function (data) {
   return axios.get(config.used_lists, {params: data})
 }
