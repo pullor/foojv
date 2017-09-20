@@ -317,6 +317,7 @@ export const Ntlogin = () => {
 // 第三方登录(qq 微博)
 export const encyTop = () => {
   return axios.post(config.encyTop)
+}
 export const usedHouse = function (data) {
   return axios.get(config.used_lists, {params: data})
 }
