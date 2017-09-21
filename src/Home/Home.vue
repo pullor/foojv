@@ -30,11 +30,17 @@
     <div class="toutiao">
       <ul>
         <li class="image"></li>
-        <li class="toutiaocontent"></li>
+        <li class="toutiaocontent">
+          <div id="toutiaocontent">
+          <p class="firstnews"> 第一条新闻</p>
+          <p class="secondnews"> 第二条新闻</p>
+          <p class="thirdnews"> 第三条新闻</p>
+          </div>
+        </li>
       </ul>
     </div>
     <mt-header title="活动专题">
-      <router-link to="/" slot="right">
+      <router-link to="/activity" slot="right">
         <mt-button icon="right">更多</mt-button>
       </router-link>
       <mt-button icon="more" slot="right"></mt-button>
@@ -48,8 +54,8 @@
       </mt-swipe>
     </div>
     <mt-header title="福居百科">
-      <router-link to="/" slot="right">
-        <mt-button icon="right">更多</mt-button>
+      <router-link to="/knowledge" slot="right">
+        <mt-button icon="">更多</mt-button>
       </router-link>
       <mt-button icon="more" slot="right"></mt-button>
     </mt-header>
@@ -63,43 +69,46 @@
       </ul>
     </div>
     <mt-header title="热门推荐">
-      <router-link to="/" slot="right">
-        <mt-button icon="right">更多二手房</mt-button>
-      </router-link>
+      <mt-button icon="" slot="right" @click.native="changeurl" >{{this.selected}}</mt-button>
       <mt-button icon="more" slot="right"></mt-button>
     </mt-header>
 
     <mt-navbar v-model="selected">
-      <mt-tab-item id="1">二手房</mt-tab-item>
-      <mt-tab-item id="2">新房</mt-tab-item>
-      <mt-tab-item id="3">租房</mt-tab-item>
+      <mt-tab-item id="更多二手房">二手房</mt-tab-item>
+      <mt-tab-item id="更多新房">新房</mt-tab-item>
+      <mt-tab-item id="更多租房">租房</mt-tab-item>
     </mt-navbar>
     <mt-tab-container v-model="selected">
-      <mt-tab-container-item id="1">
+      <mt-tab-container-item id="更多二手房">
         <mt-cell v-for="item in usedlist" key="1">
           <img src="../assets/usedhouse1.png" alt="" >
-          <p>{{item.address}} {{item.decoration}}</p>
+          <div class="usedhousecontent">
+          <p class="usedHdec">{{item.address}} {{item.decoration}}</p>
           <p>{{item.livingroom}}室{{item.wc}}卫/{{item.direction}}</p>
-          <p class="total">{{item.total_price}}万</p>
-          <p>{{item.unit_price}}/m²</p>
+            <p class="Hprice"><span class="total">{{item.total_price}}万</span>
+          {{item.unit_price}}/m²</p>
+          </div>
         </mt-cell>
       </mt-tab-container-item>
-      <mt-tab-container-item id="2">
-        <mt-cell v-for="item in usedlist"  key="2">
+      <mt-tab-container-item id="更多新房">
+        <mt-cell v-for="item in newlist"  key="2">
           <img src="../assets/usedhouse1.png" alt="" >
-          <p>{{item.address}} {{item.decoration}}</p>
-          <p>{{item.livingroom}}室{{item.wc}}卫/{{item.direction}}</p>
-          <p class="total">{{item.total_price}}万</p>
-          <p>{{item.unit_price}}/m²</p>
+          <div class="usedhousecontent">
+            <p class="usedHdec">{{item.address}} {{item.decoration}}</p>
+            <p>{{item.livingroom}}室{{item.wc}}卫/{{item.direction}}</p>
+            <p class="Hprice"><span class="total">{{item.property_price}}万</span>
+              {{item.average_price}}/m²</p>
+            </div>
           </mt-cell>
       </mt-tab-container-item>
-      <mt-tab-container-item id="3">
-        <mt-cell v-for="item in usedlist" key="3">
+      <mt-tab-container-item id="更多租房">
+        <mt-cell v-for="item in RetalLists" key="3">
           <img src="../assets/usedhouse1.png" alt="" >
-          <p>{{item.address}} {{item.decoration}}</p>
-          <p>{{item.livingroom}}室{{item.wc}}卫/{{item.direction}}</p>
-          <p class="total">{{item.total_price}}万</p>
-          <p>{{item.unit_price}}/m²</p>
+          <div class="usedhousecontent">
+            <p class="usedHdec">{{item.address}} {{item.decoration}}</p>
+            <p>{{item.livingroom}}室{{item.wc}}卫/{{item.direction}}/{{item.built_area}}/m²</p>
+            <p class="Hprice"><span class="total">{{item.rent}}/{{item.rent_type}}</span></p>
+          </div>
           </mt-cell>
       </mt-tab-container-item>
     </mt-tab-container>
@@ -111,49 +120,114 @@
         <li></li>
       </ul>
     </div>
-    <div class="toutiao">
-      <ul>
-        <li></li>
-        <li></li>
-      </ul>
-    </div>
-    <div class="toutiao">
-      <ul>
-        <li></li>
-        <li></li>
-      </ul>
-    </div>
-
     <footerbar></footerbar>
   </section>
 </template>
 
 <script>
   import footerbar from '../components/Footbar.vue'
-  import {usedList} from '../api/api'
+  import router from '../router/index'
+  import {usedList, adLists, adDetail, RetalLists, NewList, usedDetail} from '../api/api'
   export default {
     components: {
       footerbar: footerbar
     },
     data () {
       return {
-        selected: '',
-        usedlist: []
+        selected: '更多二手房',
+        active: '',
+        usedlist: [],
+        adlist: [],
+        adDetail: [],
+        RetalLists: [],
+        newlist: []
       }
     },
     mounted () {
-      this.getusedlist()
+      this.getusedlist('1-100000')
+      this.getusedDetail(16)
+      this.getRetalLists()
+      this.getNewList()
+      var newsbox = document.getElementById('toutiaocontent')
+      var boxheight = 0
+      setInterval(function () {
+        boxheight -= 1.4
+        if (boxheight < -2) {
+          boxheight = 0
+        }
+        newsbox.style.top = boxheight + 'rem'
+        console.log(boxheight)
+      }, 2000)
     },
     methods: {
-      getusedlist () {
+      changeurl () {
+        if (this.selected === '更多二手房') {
+          router.push('/usedhouse')
+        }
+        if (this.selected === '更多新房') {
+          router.push('/newhouse')
+        }
+        if (this.selected === '更多租房') {
+          router.push('/renthouse')
+        }
+      },
+      getusedlist (params) {
         var self = this
-        usedList().then(function (res) {
+        usedList(params).then(function (res) {
           if (res.data.code === 200) {
             self.usedlist = res.data.data
-            console.log(res.data.data)
+            self.usedlist.length = 5
+          }
+        }).catch(function () {})
+      },
+//      获取二手房列表
+      getusedDetail (totalp) {
+        var self = this
+        usedDetail(totalp).then(function (res) {
+          if (res.data.code === 200) {
+            self.usedlist = res.data.data
+          }
+        }).catch(function () {})
+      },
+      getadlist () {
+        var self = this
+        adLists().then(function (res) {
+          if (res.data.code === 200) {
+            self.adlist = res.data.data
+            self.adlist.length = 5
+          }
+        }).catch(function () {})
+      },
+//      获取新闻列表
+      getadDetail () {
+        var self = this
+        adDetail().then(function (res) {
+          if (res.data.code === 200) {
+            self.bottomlists = res.data.data
+          }
+        }).catch(function () {})
+      },
+//      获取新闻详情
+      getRetalLists () {
+        var self = this
+        RetalLists().then(function (res) {
+          if (res.data.code === 200) {
+            self.RetalLists = res.data.data
+            self.RetalLists.length = 5
+          }
+        }).catch(function () {})
+      },
+//       获取租房详情
+      getNewList () {
+        var self = this
+        NewList().then(function (res) {
+          if (res.data.code === 200) {
+            self.newlist = res.data.data
+            self.newlist.length = 5
           }
         }).catch(function () {})
       }
+//      获取新房列表
     }
   }
 </script>
@@ -226,10 +300,25 @@ section{
 .toutiao .toutiaocontent{
   display: inline-block;
   height: 3rem;
-  width: 17rem;
+  width: 17.3rem;
   background-color: white;
   border-left:0.05rem solid #ccc;
   margin-bottom: 1rem;
+  overflow: hidden;
+
+}
+#toutiaocontent{
+  position: relative;
+  top:0;
+  left: 0;
+}
+.toutiao .toutiaocontent p{
+  width: 17rem;
+  height: 1.3rem;
+  margin-top: 0.1rem;
+  margin-bottom: 0.15rem;
+  margin-left: 0.2rem;
+  background-color: navajowhite;
 }
 .mint-header{
   font-size: 0.9rem;
@@ -313,29 +402,53 @@ section{
     background: url("http://www.fooju.cn/fjw/uploads/encyType/20170829/59a4cd7b9d5ee.png") center center no-repeat;
   }
 .baike4{
-  background: url("http://www.fooju.cn/fjw/uploads/encyType/20170829/59a4cd7b9d5ee.png") center center no-repeat;
+  background: url("http://www.fooju.cn/fjw/uploads/encyType/20170829/59a4cd6668c9d.png") center center no-repeat;
 }
 .baike5{
-  background: url("http://www.fooju.cn/fjw/uploads/encyType/20170829/59a4cd7b9d5ee.png") center center no-repeat;
+  background: url("http://www.fooju.cn/fjw/uploads/encyType/20170829/59a4cd70a0738.png") center center no-repeat;
 }
 .mint-cell-text{
   font-size: 1rem;
 }
 .mint-cell-wrapper{
-  margin-bottom: 0.1rem;
+  margin-bottom: 0.8rem;
 }
   .mint-cell-value{
+    display: block;
     height: 6rem;
     width: 100%;
     font-size: 0.8rem;
   }
 .mint-cell-value img{
-  display: inline-block;
+  display: block;
   height: 6rem ;
   width: 8rem;
+  float: left;
+  padding-right: 2rem;
+}
+.usedhousecontent{
+  float: left;
 }
 .mint-cell-value .total{
   font-size: 1rem;
   color:red;
+  padding-right: 0.5rem;
+}
+  .usedHdec{
+    font-size: 0.9rem;
+    color: black;
+    padding-top: 0.8rem;
+    padding-bottom: 0.5rem;
+    overflow: hidden;
+    width: 10rem;
+    height: 1.3rem;
+  }
+  .Hprice{
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+.mint-button-text{
+  color: gray;
+  font-size: 0.8rem;
 }
 </style>

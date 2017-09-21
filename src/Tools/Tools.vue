@@ -1,6 +1,6 @@
 <template>
   <section>
-    <mt-header fixed title="福居工具"></mt-header>
+    <mt-header fixed title="福居工具" class="toolshead"></mt-header>
     <div class="swipe-wrapper">
       <mt-swipe :auto="4000">
         <mt-swipe-item class="swipe-item-1">1</mt-swipe-item>
@@ -35,9 +35,6 @@
 </script>
 
 <style>
-  html{
-    text-align: center;
-  }
   .swipe-wrapper{
     width: 100%;
     height: 15rem;
@@ -61,7 +58,7 @@
     width: 2rem;
     height: 2rem;
   }
-  .mint-header-title{
-    margin-left: 13rem;
+  .toolshead{
+    padding-left: 13rem;
   }
 </style>

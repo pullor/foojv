@@ -29,6 +29,7 @@ import FindMarket from '../Tools/findmarket.vue'
 import HelpHouse from '../Tools/helphouse.vue'
 import TaxCalculator from '../Tools/taxcalculator.vue'
 import Valuation from '../Tools/valuation.vue'
+import Temp from '../Home/temple.vue'
 
 Vue.use(Router)
 
@@ -167,6 +168,11 @@ export default new Router({
       path: '/valuation',
       name: 'valuation',
       component: Valuation
+    },
+    {
+      path: '/temp',
+      name: 'temp',
+      component: Temp
     }
   ]
 })

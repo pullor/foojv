@@ -213,7 +213,6 @@
         usedList().then(function (res) {
           console.log(res.data)
           self.usedHouseData = res.data.data
-          console.log(self.usedHouseData)
         })
       },
       loadMore () {},
@@ -223,7 +222,7 @@
       popupTopShow () {
         this.popupTopVisible = true
       },
-      getHouseMap () {
+      gethouseMap () {
         var self = this
         setTimeout(function () {
           self.popupTopVisible = false
@@ -285,6 +284,11 @@
         var id = event.currentTarget.getAttribute('data-index')
         console.log(id)
         this.$router.push({name: 'SecondHand', params: {id: id}})
+          usedList({r_id: self.houseMap}).then(function (res) {
+            console.log(res.data)
+            self.usedHouseData = res.data.data
+          })
+        }, 100)
       }
     }
   }
