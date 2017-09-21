@@ -318,6 +318,3 @@ export const Ntlogin = () => {
 export const encyTop = () => {
   return axios.post(config.encyTop)
 }
-export const usedHouse = function (data) {
-  return axios.get(config.used_lists, {params: data})
-}
