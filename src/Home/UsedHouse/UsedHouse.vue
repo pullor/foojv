@@ -282,13 +282,10 @@
       getHouseDetails (event) {
         event.preventDefault()
         var id = event.currentTarget.getAttribute('data-index')
-        console.log(id)
         this.$router.push({name: 'SecondHand', params: {id: id}})
-          usedList({r_id: self.houseMap}).then(function (res) {
-            console.log(res.data)
-            self.usedHouseData = res.data.data
-          })
-        }, 100)
+        usedList({r_id: self.houseMap}).then(function (res) {
+          self.usedHouseData = res.data.data
+        })
       }
     }
   }

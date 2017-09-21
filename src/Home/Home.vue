@@ -156,7 +156,6 @@
           boxheight = 0
         }
         newsbox.style.top = boxheight + 'rem'
-        console.log(boxheight)
       }, 2000)
     },
     methods: {

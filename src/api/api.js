@@ -4,21 +4,11 @@
 import config from './config'
 import axios from 'axios'
 
-<<<<<<< HEAD
 export const usedList = (data) => {
   return axios.get(config.used_lists, {params: data})
 }
 export const usedDetail = (data) => {
   return axios.get(config.used_detail, {params: data})
-=======
-// axios.defaults.withCredentials = true
-
-export const usedList = (totalp) => {
-  return axios.get(config.used_lists, {params: {total_price: totalp}})
-}
-export const usedDetail = (params) => {
-  return axios.get(config.used_detail, {params: {id: params}})
->>>>>>> ea2d9f3c9d7e37129d33e048c2717b2021f4b68c
 }
 // 二手房列表详情
 export const login = () => {

@@ -126,18 +126,17 @@
     methods: {
       getData () {
         this.id = this.$route.params.id
-        console.log(this.id)
         var self = this
         usedDetail({id: this.id}).then(function (res) {
-          console.log(res.data.data)
           self.houseData = res.data.data.fangyuanxinxi[0]
           self.peopleData = res.data.data.jingjirenpingfang[0]
           self.watchData = res.data.data.daikanjilu[0]
-          console.log(self.houseData)
         })
       },
       routerTo () {
-        this.$router.push({ name: 'UsedHouse' })
+//        this.$router.push({ name: 'UsedHouse' })
+//        this.$router.back(-1)
+        history.back()
       }
     }
   }
