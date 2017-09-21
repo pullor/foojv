@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <router-view></router-view>
+    <transition name="app-fade" mode="out-in">
+      <router-view></router-view>
+    </transition>
   </div>
 </template>
 
@@ -27,7 +29,20 @@ html{
 li{
   list-style: none;
 }
-  a{
-    text-decoration: none;
-  }
+a{
+  text-decoration: none;
+}
+.app-fade-enter-active {
+  transition: all .3s;
+}
+.app-fade-leave-active {
+  transition: all .1s;
+}
+.app-fade-enter, .app-fade-leave-to {
+  opacity: 0;
+}
+.app-fade-leave, .app-fade-enter-to {
+  opacity: 1;
+}
+
 </style>

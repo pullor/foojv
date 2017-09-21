@@ -21,7 +21,7 @@
         infinite-scroll-disabled="loading"
         infinite-scroll-distance="10">
         <li v-for="item in usedHouseData">
-          <a href="">
+          <a href="" :data-index=item.id  @click="getHouseDetails">
             <div class="newhouse-list-img"><img src="../../assets/moren_house_01.png" alt=""></div>
             <div class="newhouse-list-content">
               <p class="list-content-title">{{item.village}}</p>
@@ -60,7 +60,7 @@
           </transition>
 
           <transition name="fade" mode="out-in">
-            <div v-if="selected==2" class="newhouse-tab-add">
+            <div v-if="selected==2" class="newhouse-tab-add" @click="getHousePrice">
             <Radio
               align="right"
               v-model="housePrice"
@@ -77,7 +77,7 @@
               v-model="houseType"
               :options="['不限', '一室', '二室', '三室', '四室', '五室', '五室以上']">
             </checklist>
-            <Button class="newhouse-tab-yes">确认</Button>
+            <Button class="newhouse-tab-yes" @click="getHouseBedroom">确认</Button>
           </div>
           </transition>
 
@@ -176,7 +176,7 @@
 
 <script>
   import { Swipe, SwipeItem, InfiniteScroll, Popup, Button, Navbar, TabItem, TabContainer, TabContainerItem, Checklist, Radio } from 'mint-ui'
-  import {usedHouse} from '../../api/api'
+  import {usedList} from '../../api/api'
   export default{
     components: {
       Swipe,
@@ -210,7 +210,7 @@
     methods: {
       getData () {
         var self = this
-        usedHouse().then(function (res) {
+        usedList().then(function (res) {
           console.log(res.data)
           self.usedHouseData = res.data.data
           console.log(self.usedHouseData)
@@ -226,18 +226,70 @@
       getHouseMap () {
         var self = this
         setTimeout(function () {
+          self.popupTopVisible = false
           console.log(self.houseMap)
-          usedHouse({r_id: self.houseMap}).then(function (res) {
-            console.log(res.data)
-            self.usedHouseData = res.data.data
-            console.log(self.usedHouseData)
-          })
-        }, 100)
+          if (self.houseMap === '不限') {
+            self.getData()
+          } else {
+            usedList({ r_id: "'+self.houseMap+'" }).then(function (res) {
+              self.usedHouseData = []
+              self.usedHouseData = res.data.data
+              console.log(self.usedHouseData)
+            })
+          }
+        }, 10)
+      },
+      getHousePrice () {
+        var self = this
+        setTimeout(function () {
+          self.popupTopVisible = false
+          console.log(self.housePrice)
+          if (self.housePrice === '不限') {
+            self.getData()
+          } else {
+            var reg = /[0-9]{1,5}/g
+            var temp
+            var priceData = []
+            while ((temp = reg.exec(self.housePrice)) != null) {
+              priceData.push(temp[0])
+            }
+            console.log(priceData)
+            var totalData = priceData[0] + '-' + priceData[1]
+            console.log(totalData)
+            usedList({ total_price: totalData }).then(function (res) {
+              self.usedHouseData = []
+              self.usedHouseData = res.data.data
+              console.log(self.usedHouseData)
+            })
+          }
+        }, 10)
+      },
+      getHouseBedroom () {
+        var self = this
+        setTimeout(function () {
+          self.popupTopVisible = false
+          console.log(self.houseType)
+          if (self.houseMap === '不限') {
+            self.getData()
+          } else {
+            usedList({}).then(function (res) {
+              self.usedHouseData = []
+              self.usedHouseData = res.data.data
+              console.log(self.usedHouseData)
+            })
+          }
+        }, 10)
+      },
+      getHouseDetails (event) {
+        event.preventDefault()
+        var id = event.currentTarget.getAttribute('data-index')
+        console.log(id)
+        this.$router.push({name: 'SecondHand', params: {id: id}})
       }
     }
   }
 </script>
 
-<style leng="less">
+<style leng="less" scoped>
   @import "UsedHouse.less";
 </style>

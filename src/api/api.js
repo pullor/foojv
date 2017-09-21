@@ -4,11 +4,11 @@
 import config from './config'
 import axios from 'axios'
 
-export const usedList = () => {
-  return axios.post(config.used_lists)
+export const usedList = (data) => {
+  return axios.get(config.used_lists, {params: data})
 }
-export const usedDetail = () => {
-  return axios.post(config.used_detail)
+export const usedDetail = (data) => {
+  return axios.get(config.used_detail, {params: data})
 }
 // 二手房列表详情
 export const login = () => {

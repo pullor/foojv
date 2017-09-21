@@ -14,6 +14,7 @@ import RentHouse from '../Home/RentHouse/RentHouse.vue'
 import SchoolHouse from '../Home/SchoolHouse/SchoolHouse.vue'
 import ShopHouse from '../Home/ShopHouse/ShopHouse.vue'
 import UsedHouse from '../Home/UsedHouse/UsedHouse.vue'
+import SecondHand from '../Home/UsedHouse/SecondHand.vue'
 // tools 界面
 import Tools from '../Tools/Tools'
 // watch 界面
@@ -102,6 +103,11 @@ export default new Router({
       path: '/UsedHouse',
       name: 'UsedHouse',
       component: UsedHouse
+    },
+    {
+      path: '/SecondHand/:id',
+      name: 'SecondHand',
+      component: SecondHand
     },
 
     // tools 界面
