@@ -30,11 +30,17 @@
     <div class="toutiao">
       <ul>
         <li class="image"></li>
-        <li class="toutiaocontent"></li>
+        <li class="toutiaocontent">
+          <div id="toutiaocontent">
+          <p class="firstnews"> 第一条新闻</p>
+          <p class="secondnews"> 第二条新闻</p>
+          <p class="thirdnews"> 第三条新闻</p>
+          </div>
+        </li>
       </ul>
     </div>
     <mt-header title="活动专题">
-      <router-link to="/" slot="right">
+      <router-link to="/activity" slot="right">
         <mt-button icon="right">更多</mt-button>
       </router-link>
       <mt-button icon="more" slot="right"></mt-button>
@@ -48,7 +54,7 @@
       </mt-swipe>
     </div>
     <mt-header title="福居百科">
-      <router-link to="/" slot="right">
+      <router-link to="/knowledge" slot="right">
         <mt-button icon="">更多</mt-button>
       </router-link>
       <mt-button icon="more" slot="right"></mt-button>
@@ -63,9 +69,7 @@
       </ul>
     </div>
     <mt-header title="热门推荐">
-      <router-link to="" slot="right" id="routerL" tag="a">
-        <mt-button icon="">{{this.selected}}</mt-button>
-      </router-link>
+      <mt-button icon="" slot="right" @click.native="changeurl" >{{this.selected}}</mt-button>
       <mt-button icon="more" slot="right"></mt-button>
     </mt-header>
 
@@ -122,7 +126,8 @@
 
 <script>
   import footerbar from '../components/Footbar.vue'
-  import {usedList, adLists, adDetail, RetalLists, NewList} from '../api/api'
+  import router from '../router/index'
+  import {usedList, adLists, adDetail, RetalLists, NewList, usedDetail} from '../api/api'
   export default {
     components: {
       footerbar: footerbar
@@ -139,44 +144,57 @@
       }
     },
     mounted () {
-      var ra = document.getElementById('#routerL')
-      console.log(ra)
-      this.getusedlist()
+      this.getusedlist('1-100000')
+      this.getusedDetail(16)
       this.getRetalLists()
       this.getNewList()
-    },
-    watch: {
-      selected: function (newdata) {
-        if (newdata === '更多二手房') {
-          console.log(1)
+      var newsbox = document.getElementById('toutiaocontent')
+      var boxheight = 0
+      setInterval(function () {
+        boxheight -= 1.4
+        if (boxheight < -2) {
+          boxheight = 0
         }
-        if (newdata === '更多新房') {
-          console.log(2)
-        }
-        if (newdata === '更多租房') {
-          console.log(3)
-        }
-      }
+        newsbox.style.top = boxheight + 'rem'
+        console.log(boxheight)
+      }, 2000)
     },
     methods: {
-      getusedlist () {
+      changeurl () {
+        if (this.selected === '更多二手房') {
+          router.push('/usedhouse')
+        }
+        if (this.selected === '更多新房') {
+          router.push('/newhouse')
+        }
+        if (this.selected === '更多租房') {
+          router.push('/renthouse')
+        }
+      },
+      getusedlist (params) {
         var self = this
-        usedList().then(function (res) {
+        usedList(params).then(function (res) {
           if (res.data.code === 200) {
             self.usedlist = res.data.data
             self.usedlist.length = 5
-//            console.log(res.data.data)
           }
         }).catch(function () {})
       },
 //      获取二手房列表
+      getusedDetail (totalp) {
+        var self = this
+        usedDetail(totalp).then(function (res) {
+          if (res.data.code === 200) {
+            self.usedlist = res.data.data
+          }
+        }).catch(function () {})
+      },
       getadlist () {
         var self = this
         adLists().then(function (res) {
           if (res.data.code === 200) {
             self.adlist = res.data.data
             self.adlist.length = 5
-//            console.log(res.data.data)
           }
         }).catch(function () {})
       },
@@ -186,7 +204,6 @@
         adDetail().then(function (res) {
           if (res.data.code === 200) {
             self.bottomlists = res.data.data
-//            console.log(res.data.data)
           }
         }).catch(function () {})
       },
@@ -197,7 +214,6 @@
           if (res.data.code === 200) {
             self.RetalLists = res.data.data
             self.RetalLists.length = 5
-            console.log(res.data.data)
           }
         }).catch(function () {})
       },
@@ -208,7 +224,6 @@
           if (res.data.code === 200) {
             self.newlist = res.data.data
             self.newlist.length = 5
-//            console.log(res.data)
           }
         }).catch(function () {})
       }
@@ -285,10 +300,25 @@ section{
 .toutiao .toutiaocontent{
   display: inline-block;
   height: 3rem;
-  width: 17rem;
+  width: 17.3rem;
   background-color: white;
   border-left:0.05rem solid #ccc;
   margin-bottom: 1rem;
+  overflow: hidden;
+
+}
+#toutiaocontent{
+  position: relative;
+  top:0;
+  left: 0;
+}
+.toutiao .toutiaocontent p{
+  width: 17rem;
+  height: 1.3rem;
+  margin-top: 0.1rem;
+  margin-bottom: 0.15rem;
+  margin-left: 0.2rem;
+  background-color: navajowhite;
 }
 .mint-header{
   font-size: 0.9rem;
@@ -372,10 +402,10 @@ section{
     background: url("http://www.fooju.cn/fjw/uploads/encyType/20170829/59a4cd7b9d5ee.png") center center no-repeat;
   }
 .baike4{
-  background: url("http://www.fooju.cn/fjw/uploads/encyType/20170829/59a4cd7b9d5ee.png") center center no-repeat;
+  background: url("http://www.fooju.cn/fjw/uploads/encyType/20170829/59a4cd6668c9d.png") center center no-repeat;
 }
 .baike5{
-  background: url("http://www.fooju.cn/fjw/uploads/encyType/20170829/59a4cd7b9d5ee.png") center center no-repeat;
+  background: url("http://www.fooju.cn/fjw/uploads/encyType/20170829/59a4cd70a0738.png") center center no-repeat;
 }
 .mint-cell-text{
   font-size: 1rem;

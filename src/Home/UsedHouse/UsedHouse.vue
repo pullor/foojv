@@ -176,7 +176,7 @@
 
 <script>
   import { Swipe, SwipeItem, InfiniteScroll, Popup, Button, Navbar, TabItem, TabContainer, TabContainerItem, Checklist, Radio } from 'mint-ui'
-  import {usedHouse} from '../../api/api'
+  import {usedList} from '../../api/api'
   export default{
     components: {
       Swipe,
@@ -210,10 +210,9 @@
     methods: {
       getData () {
         var self = this
-        usedHouse().then(function (res) {
+        usedList().then(function (res) {
           console.log(res.data)
           self.usedHouseData = res.data.data
-          console.log(self.usedHouseData)
         })
       },
       loadMore () {},
@@ -223,14 +222,13 @@
       popupTopShow () {
         this.popupTopVisible = true
       },
-      getHouseMap () {
+      gethouseMap () {
         var self = this
         setTimeout(function () {
           console.log(self.houseMap)
-          usedHouse({r_id: self.houseMap}).then(function (res) {
+          usedList({r_id: self.houseMap}).then(function (res) {
             console.log(res.data)
             self.usedHouseData = res.data.data
-            console.log(self.usedHouseData)
           })
         }, 100)
       }

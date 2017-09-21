@@ -4,11 +4,13 @@
 import config from './config'
 import axios from 'axios'
 
-export const usedList = () => {
-  return axios.post(config.used_lists)
+// axios.defaults.withCredentials = true
+
+export const usedList = (totalp) => {
+  return axios.get(config.used_lists, {params: {total_price: totalp}})
 }
-export const usedDetail = () => {
-  return axios.post(config.used_detail)
+export const usedDetail = (params) => {
+  return axios.get(config.used_detail, {params: {id: params}})
 }
 // 二手房列表详情
 export const login = () => {
@@ -24,7 +26,7 @@ export const adLists = () => {
 }
 // 新闻列表
 export const adDetail = (params) => {
-  return axios.get(config.adDetail, {id: params})
+  return axios.post(config.adDetail, {id: params})
 }
 // 新闻详情
 export const bottomLists = () => {
