@@ -23,8 +23,8 @@ export const adLists = () => {
   return axios.post(config.adLists)
 }
 // 新闻列表
-export const adDetail = () => {
-  return axios.post(config.adDetail)
+export const adDetail = (params) => {
+  return axios.get(config.adDetail, {id: params})
 }
 // 新闻详情
 export const bottomLists = () => {
